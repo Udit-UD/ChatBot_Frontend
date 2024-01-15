@@ -7,9 +7,12 @@ import { AiOutlinePicture } from "react-icons/ai";
 import { FiMusic } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa";
 import { RxExit } from "react-icons/rx";
+import {setClear} from "../state/index";
+import { useDispatch } from 'react-redux';
 
 export const Sidebar = () => {
     const [selected, setSelected] = useState("chat")
+    const dispatch = useDispatch();
   return (
     <div className='w-[6%] h-screen bg-slate-800 p-2 flex flex-col justify-center items-center'>
         <div className=" pt-2 flex flex-col items-center gap-1">
@@ -23,7 +26,7 @@ export const Sidebar = () => {
             <AiOutlinePicture cursor={"pointer"} className={`${selected == "picture" ? "text-green-500" : "text-gray-300"}`} fontSize={"1.35rem"} />
             <FiMusic cursor={"pointer"} className={`${selected == "music" ? "text-green-500" : "text-gray-300"}`} fontSize={"1.35rem"} />
             <FaRegBookmark cursor={"pointer"} className={`${selected == "bookmark" ? "text-green-500" : "text-gray-300"}`} fontSize={"1.35rem"} />
-            <RxExit cursor={"pointer"} className={`${selected == "exit" ? "text-green-500" : "text-gray-300"}`} fontSize={"1.35rem"} />
+            <RxExit cursor={"pointer"} onClick={() => dispatch(setClear())} className={`${selected == "exit" ? "text-green-500" : "text-gray-300"}`} fontSize={"1.35rem"} />
         </div>
 
     </div>

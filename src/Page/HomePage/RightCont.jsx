@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { MessageBox } from '../../Components/MessageBox';
 import { IoAttach, IoMicOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
-import { useParams } from 'react-router-dom';
 import { FaRegStopCircle } from "react-icons/fa";
 import ScrollToBottom from "react-scroll-to-bottom";
-
+import { useSelector } from 'react-redux';
+import { Loading } from '../../Components/Loading';
 
 export const RightCont = () => {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {id} = useParams();
+  const [mainLoading, setMainLoading] = useState(false);
+  const selectedConvo = useSelector((state) => state.selectedConvo);
 
   const handleSend = async() => {
     try{
@@ -24,7 +25,7 @@ export const RightCont = () => {
         },
       ]);
       setLoading(true);
-      const res = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${id}`,{
+      const res = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${selectedConvo}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
@@ -53,10 +54,11 @@ export const RightCont = () => {
 
   const fetchConversation = async() => {
     try{
+      if(selectedConvo){
+        setMainLoading(true);
+        console.log("calling...");
 
-      if(id){
-        setLoading(true);
-        const response = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${id}`, {
+        const response = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${selectedConvo}`, {
           method:"GET", 
         });
         const data = await response.json();
@@ -64,33 +66,46 @@ export const RightCont = () => {
           sender: item.sender,
           text: item.text,
         })));
-      }      
+      }     
+      else{
+        return;
+      }    
     }
     catch(e){
       console.log(e);
     }
     finally{
-      setLoading(false);
+      setMainLoading(false);
     }
   }
 
   useEffect(()=>{
     fetchConversation();
-  }, []);
+  }, [selectedConvo]);
 
   return (
     <div className='relative w-3/4 h-[91vh] bg-main-bg pt-10 px-12 pb-8'>
-      <ScrollToBottom className='overflow-y-auto h-[75vh] scroll-smooth'>
-        { id ? 
-        (messages.length >= 1) ? 
-          messages.map((message, index) => (
-            <MessageBox key={index} text={message.text} isAssistant={message.sender === "assistant"} />
-          )) : 
-          <div className='flex justify-center items-center font-bold text-2xl text-gray-100 h-[70vh]'>
-            Enter Your First
+      <ScrollToBottom className='overflow-y-auto h-[75vh] pb-3 scroll-smooth'>
+        {
+          mainLoading ? (
+          <div className='h-[75vh] flex justify-center items-center'>
+            <Loading />
           </div>
+          ) : selectedConvo ? (
+            <>
+              {(messages.length >= 1) ? 
+                (messages.map((message, index) => (
+                  <MessageBox key={index} text={message.text} isAssistant={message.sender === "assistant"} />
+                )) 
+                ): (
+                <div className='flex justify-center items-center font-bold text-2xl text-gray-100 h-[70vh]'>
+                  Enter Your First Prompt
+                </div>
+              )}
+              {loading && <MessageBox key="typing" text="Typing..." isAssistant={true} />}
+            </>)
           : <div className='flex justify-center items-center font-bold text-2xl text-gray-100 h-[70vh]'>
-          Create A Chat First{" :-)"}
+          Create Or Join A Chat First{" :-)"}
         </div>
         }
       </ScrollToBottom>
@@ -99,9 +114,10 @@ export const RightCont = () => {
         <div className="flex gap-2 w-[90%]">
           <IoAttach fontSize={"1.75rem"}/>
           <input type="text" placeholder='Send a message' 
-            className={`w-full outline-none bg-transparent` }
+            className={`w-full outline-none bg-transparent ${selectedConvo ? "" : "cursor-not-allowed"}` }
             value={prompt} 
             onChange={(e) => {setPrompt(e.target.value)}} 
+            disabled={selectedConvo ? false: true}
             onKeyDown={(e) => {!loading && e.key==="Enter" && handleSend()}}
             />
 

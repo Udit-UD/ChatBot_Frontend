@@ -26,7 +26,7 @@ export const Navbar = () => {
                 <div className={`absolute z-10 right-10 top-12 bg-slate-900 border border-gray-300 rounded-md shadow-md ${isDropdownOpen ? 'block' : 'hidden'}`}>
                     <button className='block px-4 py-2 text-white hover:bg-slate-700 rounded-md w-full text-left'
                         onClick={()=> {console.log("SignOut!!"); setIsDropdownOpen(!isDropdownOpen)}} >
-                        Sign Out
+                        Leave Chat
                     </button>
                 </div>
             </div>

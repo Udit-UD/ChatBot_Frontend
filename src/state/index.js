@@ -10,17 +10,16 @@ export const convoSlice = createSlice({
     initialState,
     reducers: {
         setselectedConvo: (state, action) => {
-            if (state.conversations.find((convo) => convo._id === action.payload.id)) {
-              state.selectedConvo = action.payload.id;
-            } else {
-              state.selectedConvo = null;
-            }
+            state.selectedConvo = action.payload;
         },
         setConvos: (state, action) => {
             state.conversations = action.payload.conversations.reverse();
+        },
+        setClear: (state) => {
+            state.selectedConvo = null;
         }
     }
 })
 
-export const {setselectedConvo, setConvos} = convoSlice.actions;
+export const {setselectedConvo, setConvos, setClear} = convoSlice.actions;
 export default convoSlice.reducer;
