@@ -3,7 +3,7 @@ import React from 'react'
 export const MessageBox = ({text, time = "2:54PM, 15 Nov", isAssistant}) => {
   return (
 
-    <div className='text-sm p-2 w-full min-h-12'>
+    <div className='text-sm p-2 font-Roboto w-full min-h-12'>
 
         <p className={`text-xs text-gray-400 ${isAssistant ? "text-left" : "text-right"}`}>
             {time}
