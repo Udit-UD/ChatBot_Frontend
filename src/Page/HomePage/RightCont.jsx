@@ -27,7 +27,7 @@ export const RightCont = () => {
         },
       ]);
       setLoading(true);
-      const res = await fetch(`http://localhost:3000/prompt/${selectedConvo}`,{
+      const res = await fetch(`https://chat-bot-api-five.vercel.app/${selectedConvo}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
@@ -61,7 +61,7 @@ export const RightCont = () => {
         setMainLoading(true);
         console.log("calling...");
 
-        const response = await fetch(`http://localhost:3000/prompt/${selectedConvo}`, {
+        const response = await fetch(`https://chat-bot-api-five.vercel.app/${selectedConvo}`, {
           method:"GET", 
         });
         const data = await response.json();
