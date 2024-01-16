@@ -14,6 +14,8 @@ export const RightCont = () => {
   const [mainLoading, setMainLoading] = useState(false);
   const selectedConvo = useSelector((state) => state.selectedConvo);
 
+// https://chat-bot-api-five.vercel.app
+
   const handleSend = async() => {
     try{
       setPrompt("");
@@ -25,7 +27,7 @@ export const RightCont = () => {
         },
       ]);
       setLoading(true);
-      const res = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${selectedConvo}`,{
+      const res = await fetch(`http://localhost:3000/prompt/${selectedConvo}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
@@ -46,6 +48,7 @@ export const RightCont = () => {
     }
     catch(e){
       console.log(e);
+      alert(e);
     }
     finally{
       setLoading(false);
@@ -58,7 +61,7 @@ export const RightCont = () => {
         setMainLoading(true);
         console.log("calling...");
 
-        const response = await fetch(`https://chat-bot-api-five.vercel.app/prompt/${selectedConvo}`, {
+        const response = await fetch(`http://localhost:3000/prompt/${selectedConvo}`, {
           method:"GET", 
         });
         const data = await response.json();
@@ -84,7 +87,7 @@ export const RightCont = () => {
   }, [selectedConvo]);
 
   return (
-    <div className='relative w-3/4 h-[91vh] bg-main-bg pt-10 px-12 pb-8'>
+    <div className='relative w-full sm:w-3/4 h-[91vh] bg-main-bg pt-10 px-4 sm:px-10 pb-4 sm:pb-8 '>
       <ScrollToBottom className='overflow-y-auto h-[75vh] pb-3 scroll-smooth'>
         {
           mainLoading ? (

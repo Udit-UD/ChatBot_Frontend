@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     conversations: [],
     selectedConvo: null,
+    leftBar: false,
 };
 
 export const convoSlice = createSlice({
@@ -17,9 +18,12 @@ export const convoSlice = createSlice({
         },
         setClear: (state) => {
             state.selectedConvo = null;
+        },
+        setLeftBar: (state, action) => {
+            state.leftBar = action.payload;
         }
     }
 })
 
-export const {setselectedConvo, setConvos, setClear} = convoSlice.actions;
+export const {setselectedConvo, setConvos, setClear, setLeftBar} = convoSlice.actions;
 export default convoSlice.reducer;

@@ -11,12 +11,12 @@ export const Navbar = () => {
   return (
     <div className='h-[9vh] relative flex' style={{background: "rgb(30 31 38)"}}>
         <div className="w-[85%] flex justify-center items-center">
-            <div className="w-1/4 flex gap-1 bg-slate-800 border-2 border-slate-500 p-1 rounded-3xl">
+            <div className="w-3/4 sm:w-1/4  flex gap-1 bg-slate-800 border-2 border-slate-500 p-1 rounded-3xl">
                 <input type="text" placeholder='Search anything...' className='w-[85%] text-sm bg-transparent px-4 py-1 outline-none text-slate-400'/>
                 <IoSearch fontSize={"1.75rem"} className='text-slate-500'/>
             </div>
         </div>
-        <div className="w-[15%] flex justify-end mr-10 items-center gap-8 ">
+        <div className="w-[15%] flex justify-end mr-2 sm:mr-10  items-center gap-8 ">
             <RiNotificationLine className='relative' color='white' fontSize={"1.25rem"} /> 
             <div className='flex justify-center items-center gap-1 '>
                 <div className='rounded-full w-8 h-8 overflow-hidden cursor-pointer' >

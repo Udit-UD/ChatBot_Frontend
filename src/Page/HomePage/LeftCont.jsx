@@ -10,12 +10,14 @@ export const LeftCont = () => {
     const dispatch = useDispatch();
     const conversations = useSelector((state) => state.conversations);
     const selectedConvo = useSelector((state) => state.selectedConvo);
+    const leftBar = useSelector((state) => state.leftBar);
     const [loading, setLoading] = useState(false);
+
     
     const fetchConvos = async() => {
         try{
             setLoading(true);
-            const response = await fetch(`https://chat-bot-api-five.vercel.app/prompt`, {
+            const response = await fetch(`http://localhost:3000/prompt`, {
                 method:"GET", 
                 "content-type": "application/json"
             });
@@ -34,7 +36,7 @@ export const LeftCont = () => {
     const handleNewChat = async()=> {
         try{
             setLoading(true);
-            const response = await fetch(`https://chat-bot-api-five.vercel.app/prompt/create`, {
+            const response = await fetch(`http://localhost:3000/prompt/create`, {
                 method:"POST",
             });
 
@@ -58,7 +60,8 @@ export const LeftCont = () => {
     }, []);
 
   return (
-    <div className='w-1/4 h-[91vh] bg-main-bg border-r-2 border-gray-800 p-6'>
+
+    <div className={`${leftBar ? "block": "hidden "}  absolute z-10 w-2/3 sm:relative sm:w-1/4 h-[91vh] bg-main-bg border-r-2 border-gray-800 p-6 sm:block`}>
         <h1 className="text-3xl font-semibold text-white">
             Text Generator
         </h1>
@@ -86,5 +89,6 @@ export const LeftCont = () => {
             </div>
         </div>
     </div>
+    
   )
 }
